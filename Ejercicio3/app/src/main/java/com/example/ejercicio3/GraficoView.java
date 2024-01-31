@@ -13,58 +13,34 @@ public class GraficoView extends View {
     }
 
     protected void onDraw(Canvas canvas) {
-
         super.onDraw(canvas);
 
+        int anchura = canvas.getWidth();
+        int altura = canvas.getHeight();
+        float densidad = getResources().getDisplayMetrics().density;
+        float ratio = (float) altura / anchura;
+
         Paint paint = new Paint();
-
-        paint.setColor(Color.WHITE);
-
-        canvas.drawPaint(paint);
-
-        int width = canvas.getWidth();
-
-        int height = canvas.getHeight();
-
-
-        float s = getResources().getDisplayMetrics().scaledDensity;
-
         paint.setColor(Color.BLACK);
+        paint.setTextSize(30);
 
-        paint.setTextSize(25 * s);
+        Paint paintValores = new Paint();
+        paintValores.setColor(Color.BLACK);
+        paintValores.setTextSize(60);
 
-        paint.setAntiAlias(true);
-
-        float lineHeight = height / 5;
-
-
-        String densityInfo = "Densidad de escala: " + getResources().getDisplayMetrics().density;
-        String widthInfo = "Anchura del canvas: " + width;
-        String heightInfo = "Altura del canvas: " + height;
-        String aspectRatioInfo = "Ratio: " + (float) height / width;
-
-
-        for (int i = 1; i < 10; i++) {
-            float y = i * lineHeight;
-
-            canvas.drawLine(0, y, width, y, paint);
-
-            float textY = y - 10;
-
-            switch (i) {
-                case 1:
-                    canvas.drawText("Densidad de escala: " + getResources().getDisplayMetrics().density, 10, textY, paint);
-                    break;
-                case 2:
-                    canvas.drawText("Anchura del canvas: " + width, 10, textY, paint);
-                    break;
-                case 3:
-                    canvas.drawText("Altura del canvas: " + height, 10, textY, paint);
-                    break;
-                case 4:
-                    canvas.drawText("Ratio: " + (float) height / width, 10, textY, paint);
-                    break;
-            }
+        int numeroLineas = 14;
+        for (int i = 1; i <= numeroLineas; i++) {
+            float Y = (altura / (numeroLineas + 1)) * i;
+            canvas.drawLine(0, Y, anchura, Y, paint);
+            canvas.drawText(String.valueOf(Y), 50, Y, paint);
         }
+
+        // Escribir valores en pantalla
+        canvas.drawText("scale= " + densidad, anchura / 2, 302 , paintValores);
+        canvas.drawText("anchura= " + anchura , anchura / 2 , 604 ,paintValores );
+        canvas.drawText("altura= " + altura ,anchura / 2,1208,paintValores );
+        canvas.drawText(String.valueOf((float) altura-110), 50, altura-110, paint);
+        canvas.drawLine(0, altura - 100, anchura, altura-100, paint);
+        canvas.drawText("ratio= " + ratio ,anchura / 2,altura-100,paintValores );
     }
 }
